@@ -110,15 +110,13 @@ export default function ProfilePage() {
         setPreviewUrl(null);
       }
 
-      const { error: updateError } = await supabase
-        .from("profiles")
-        .update({
-          display_name: formData.display_name,
-          bio: formData.bio,
-          avatar_url: avatarUrl,
-          updated_at: new Date(),
-        })
-        .eq("id", user.id);
+      const { error: updateError } = await supabase.from("profiles").upsert({
+        id: user.id,
+        display_name: formData.display_name,
+        bio: formData.bio,
+        avatar_url: avatarUrl,
+        updated_at: new Date(),
+      });
 
       if (updateError) {
         setError(updateError.message);

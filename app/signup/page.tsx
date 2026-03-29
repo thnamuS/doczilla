@@ -48,24 +48,8 @@ export default function SignupPage() {
       return;
     }
 
-    // Store display name in profiles table
-    if (data.user) {
-      const { error: profileError } = await supabase.from("profiles").insert([
-        {
-          id: data.user.id,
-          display_name: displayName,
-          email: email,
-        },
-      ]);
-
-      if (profileError) {
-        setError(`Profile creation failed: ${profileError.message}`);
-        setLoading(false);
-        return;
-      }
-    }
-
-    // Success - redirect to login or verify email page
+    // Success - redirect to login
+    // Profile will be created when user updates their profile
     router.push("/login?message=Check your email to confirm your account");
   };
 
