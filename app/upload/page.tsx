@@ -625,18 +625,20 @@ export default function UploadPage() {
                           li: ({ node, ...props }) => (
                             <li className="mb-1" {...props} />
                           ),
-                          code: ({ node, inline, ...props }) =>
-                            inline ? (
+                          code: (props: any) => {
+                            const { inline, ...rest } = props;
+                            return inline ? (
                               <code
                                 className="bg-base-200 px-1 rounded text-xs"
-                                {...props}
+                                {...rest}
                               />
                             ) : (
                               <code
                                 className="block bg-base-200 p-2 rounded mb-2 text-xs overflow-x-auto"
-                                {...props}
+                                {...rest}
                               />
-                            ),
+                            );
+                          },
                         }}
                       >
                         {msg.content}
