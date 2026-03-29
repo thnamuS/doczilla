@@ -22,8 +22,16 @@ export const uploadFile = async (file: File, userId: string) => {
 
   console.log("File uploaded successfully. Path:", filePath);
 
+  const { data: signedUrlData, error: signedError } = await supabase.storage
+    .from("uploaded_files")
+    .createSignedUrl(filePath, 7 * 24 * 60 * 60); // 7 days in seconds
+
+  if (signedError) {
+    console.error("Signed URL error:", signedError);
+  }
+
   return {
     filePath,
-    fileUrl: filePath, // Store only the path, not the full URL
+    fileUrl: signedUrlData?.signedUrl || filePath,
   };
 };

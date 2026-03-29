@@ -25,10 +25,17 @@ export default function Navbar() {
           .single();
 
         if (profile?.avatar_url) {
-          const { data: urlData } = supabase.storage
-            .from("uploaded_files")
-            .getPublicUrl(profile.avatar_url);
-          setAvatarUrl(urlData?.publicUrl || null);
+          let avatarUrl = profile.avatar_url;
+
+          // If it's just a path (not already a full URL), generate a signed URL
+          if (!profile.avatar_url.startsWith("http")) {
+            const { data: signedData } = await supabase.storage
+              .from("uploaded_files")
+              .createSignedUrl(profile.avatar_url, 7 * 24 * 60 * 60); // 7 days
+            avatarUrl = signedData?.signedUrl || profile.avatar_url;
+          }
+
+          setAvatarUrl(avatarUrl);
         }
         if (profile?.display_name) {
           setDisplayName(profile.display_name);
