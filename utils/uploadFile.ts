@@ -22,16 +22,8 @@ export const uploadFile = async (file: File, userId: string) => {
 
   console.log("File uploaded successfully. Path:", filePath);
 
-  const { data: urlData } = supabase.storage
-    .from("uploaded_files")
-    .getPublicUrl(filePath);
-
-  console.log("Public URL response:", {
-    data: urlData,
-  });
-
   return {
     filePath,
-    fileUrl: urlData?.publicUrl,
+    fileUrl: filePath, // Store only the path, not the full URL
   };
 };
