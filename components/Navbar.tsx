@@ -25,7 +25,10 @@ export default function Navbar() {
           .single();
 
         if (profile?.avatar_url) {
-          setAvatarUrl(profile.avatar_url);
+          const { data: urlData } = supabase.storage
+            .from("uploaded_files")
+            .getPublicUrl(profile.avatar_url);
+          setAvatarUrl(urlData?.publicUrl || null);
         }
         if (profile?.display_name) {
           setDisplayName(profile.display_name);

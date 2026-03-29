@@ -118,21 +118,18 @@ export default function UploadPage() {
     try {
       console.log("Attempting to view document with path:", fileUrl);
 
-      const { data: signedUrlData, error: signedError } = await supabase.storage
+      const { data: urlData } = supabase.storage
         .from("uploaded_files")
-        .createSignedUrl(fileUrl, 60 * 60);
+        .getPublicUrl(fileUrl);
 
-      console.log("Signed URL response:", {
-        data: signedUrlData,
-        error: signedError,
+      console.log("Public URL response:", {
+        data: urlData,
       });
 
-      if (signedUrlData?.signedUrl) {
-        window.open(signedUrlData.signedUrl, "_blank");
+      if (urlData?.publicUrl) {
+        window.open(urlData.publicUrl, "_blank");
       } else {
-        setError(
-          `Could not generate document link. Path: ${fileUrl}. Error: ${signedError?.message || "Unknown"}`,
-        );
+        setError(`Could not generate document link. Path: ${fileUrl}.`);
       }
     } catch (err) {
       console.error("Document view error:", err);

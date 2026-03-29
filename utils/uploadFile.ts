@@ -22,21 +22,16 @@ export const uploadFile = async (file: File, userId: string) => {
 
   console.log("File uploaded successfully. Path:", filePath);
 
-  const { data: signedUrlData, error: signedError } = await supabase.storage
+  const { data: urlData } = supabase.storage
     .from("uploaded_files")
-    .createSignedUrl(filePath, 60 * 60);
+    .getPublicUrl(filePath);
 
-  console.log("Signed URL response:", {
-    data: signedUrlData,
-    error: signedError,
+  console.log("Public URL response:", {
+    data: urlData,
   });
-
-  if (signedError) {
-    console.error("Signed URL error:", signedError);
-  }
 
   return {
     filePath,
-    fileUrl: signedUrlData?.signedUrl,
+    fileUrl: urlData?.publicUrl,
   };
 };
