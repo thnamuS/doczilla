@@ -155,12 +155,6 @@ export default function Navbar() {
                 >
                   Login
                 </Link>
-                <Link
-                  href="/signup"
-                  className="btn btn-primary btn-sm transition-all"
-                >
-                  Sign Up
-                </Link>
               </>
             )}
           </div>

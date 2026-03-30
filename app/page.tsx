@@ -85,8 +85,8 @@ export default function LandingPage() {
                   >
                     Get Started
                   </Link>
-                  <button className="btn btn-outline btn-lg opacity-60">
-                    Sign Up
+                  <button className="btn btn-outline btn-lg opacity-60 btn-disabled">
+                    Sign Up (coming soon)
                   </button>
                 </>
               )}

@@ -124,17 +124,6 @@ export default function LoginPage() {
                 "Sign In"
               )}
             </button>
-
-            {/* Divider */}
-            <div className="divider my-4">OR</div>
-
-            {/* Signup Link */}
-            <p className="text-center text-sm text-base-content/70">
-              Don't have an account?{" "}
-              <Link href="/signup" className="link link-primary font-semibold">
-                Create one
-              </Link>
-            </p>
           </div>
         </div>
 
